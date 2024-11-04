@@ -53,6 +53,7 @@ server.use("/users", routes.users);
 server.use("/session", routes.session);
 server.use("/files", routes.files);
 server.use("/folders", routes.folders);
+server.use("/posts", routes.posts);
 
 //---- SERVER ----
 server.listen(process.env.SERVER_PORT, () => {

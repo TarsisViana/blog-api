@@ -64,6 +64,7 @@ async function matchPw(confirmPassword, { req }) {
 export const newUser = [
   validateUser,
   async (req, res) => {
+    console.log("username:" + req.body.firstname);
     const { firstname, lastname, email, password } = req.body;
     const errors = validationResult(req);
 

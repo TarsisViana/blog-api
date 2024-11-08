@@ -1,51 +1,33 @@
 import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
-import { validPassword } from "../lib/passwordUtils.js";
+
+import { Strategy as JwtStrategy } from "passport-jwt";
+import { ExtractJwt } from "passport-jwt";
+
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-const customFields = {
-  usernameField: "email",
-  passwordField: "password",
+const options = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET,
 };
 
-const verifyCallback = async (email, password, done) => {
+const verifyCallback = async (jwt_payload, done) => {
   try {
-    //get user from username
-    const user = await prisma.users.findUnique({ where: { email: email } });
-
-    //if doesnt exist return done(null,false)
-    if (!user) return done(null, false, { message: "Incorrect email" });
-
-    //else check password
-    const match = validPassword(password, user.password, user.salt);
-
-    //if its false return done(null,false)
-    if (!match) return done(null, false, { message: "Incorrect password" });
-    //else was successfull return done(null,user)
-    return done(null, user);
-
-    //catch err return done(err)
+    console.log(jwt_payload);
+    //get user from the token
+    const user = await prisma.users.findUnique({
+      where: { id: jwt_payload.user.id },
+    });
+    if (user) {
+      return done(null, user);
+    } else {
+      return done(null, false);
+    }
   } catch (err) {
     return done(err);
   }
-
-  //catch err return done(err)
 };
 
-const strategy = new LocalStrategy(customFields, verifyCallback);
+const strategy = new JwtStrategy(options, verifyCallback);
 
 passport.use(strategy);
-
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await prisma.users.findUnique({ where: { id: id } });
-    done(null, user);
-  } catch (err) {
-    done(err);
-  }
-});

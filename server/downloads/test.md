@@ -18,7 +18,7 @@ Um **padrão** é apresentado e as próximas repetições dialogam entre si e cr
 
 &nbsp;
 
-No padrão da **Aliança** o César introduziu a Aliança ==Edênica==, hoje vamos ver a Aliança de Deus com Noé e todos os seres vivos, depois veremos a subsequentes repetições que resultam na esperança da Nova Aliança Eterna (Jr 31:31 , Sl 89, Sl 132...). Essa Nova Aliança então se cumpre em Jesus, O Ungido de Deus, o Messhiah como Ele fala em:
+No padrão da **Aliança** o César introduziu a Aliança =b=Edênica==, hoje vamos ver a Aliança de Deus com Noé e todos os seres vivos, depois veremos a subsequentes repetições que resultam na esperança da Nova Aliança Eterna (Jr 31:31 , Sl 89, Sl 132...). Essa Nova Aliança então se cumpre em Jesus, O Ungido de Deus, o Messhiah como Ele fala em:
 
 > **Lc** 24:44  
 > <sup>44</sup> A seguir, Jesus lhes disse: São estas as palavras que eu vos falei, estando ainda convosco: importava se cumprisse tudo o que de mim está escrito na Lei de Moisés, nos Profetas e nos Salmos. <sup>45</sup> Então, lhes abriu o entendimento para compreenderem as Escrituras; Luke 24:44-45

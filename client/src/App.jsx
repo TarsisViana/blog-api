@@ -1,24 +1,10 @@
-import { useEffect, useState } from 'react'
-import ReactMarkdown from 'react-markdown'
-import rehypeRaw from 'rehype-raw'
+import Article from './components/Article'
 
 function App() {
-  const [post,setPost] = useState('')
 
-  useEffect(() => {
-    async function getPost() {
-      const res = await fetch('http://localhost:3000/posts');
-      const txt = await res.text()
-      console.log(txt)
-      setPost(txt)
-    }
-    getPost()
-  })
 
   return (
-    <ReactMarkdown rehypePlugins={[rehypeRaw]}>
-      {post}
-    </ReactMarkdown>
+    <Article/>
   )
 }
 

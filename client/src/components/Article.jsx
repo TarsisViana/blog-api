@@ -14,7 +14,6 @@ function Article() {
     async function getPost() {
       const res = await fetch('http://localhost:3000/posts');
       const txt = await res.text()
-      console.log(txt)
       setPost(txt)
     }
     getPost()

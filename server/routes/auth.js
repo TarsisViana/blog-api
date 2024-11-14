@@ -31,7 +31,7 @@ router.post("/login", async (req, res) => {
 
     //else was successfull return done(null,user)
     jwt.sign(
-      { user },
+      { sub: user.id },
       process.env.JWT_SECRET,
       { expiresIn: "1d" },
       (err, token) => {

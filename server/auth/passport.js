@@ -15,7 +15,7 @@ const verifyCallback = async (jwt_payload, done) => {
   try {
     console.log(jwt_payload);
     //get user from the token
-    const user = await prisma.users.findUnique({
+    const user = await prisma.user.findUnique({
       where: { id: jwt_payload.sub },
     });
     if (user) {
@@ -24,7 +24,7 @@ const verifyCallback = async (jwt_payload, done) => {
       return done(null, false);
     }
   } catch (err) {
-    return done(err);
+    return done(err, false);
   }
 };
 

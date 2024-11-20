@@ -10,7 +10,7 @@ import { validPassword } from "../lib/passwordUtils.js";
 router.post("/login", async (req, res) => {
   try {
     //get user from username
-    const user = await prisma.users.findUnique({
+    const user = await prisma.user.findUnique({
       where: { email: req.body.email },
     });
 
@@ -29,7 +29,7 @@ router.post("/login", async (req, res) => {
         message: "Incorrect password",
       });
 
-    //else was successfull return done(null,user)
+    //else was successfull return jwt token
     jwt.sign(
       { sub: user.id },
       process.env.JWT_SECRET,
@@ -42,7 +42,6 @@ router.post("/login", async (req, res) => {
       }
     );
     return;
-    //catch err return done(err)
   } catch (err) {
     console.log(err);
     return res

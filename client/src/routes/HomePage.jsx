@@ -1,15 +1,13 @@
-import { useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
+import fetcher from "../config/fetcher";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function loader() {
-  const getToken = JSON.parse(localStorage.getItem('userJwt'))
-  console.log(getToken)
-  const res = await fetch(
+  const res = await fetcher(
     `${import.meta.env.VITE_SERVER_HOST}/protected`,
         {    
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken}`
           }
     }
   )
@@ -24,6 +22,7 @@ export default function HomePage() {
   return (
     <>
       {data}
+      <Outlet/>
     </>
 )
 }

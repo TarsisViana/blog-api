@@ -9,7 +9,7 @@ export async function action({ request }) {
 
     try {
         const res = await fetch(
-      `${import.meta.env.VITE_SERVER_HOST}/users`,
+      `${import.meta.env.VITE_SERVER_HOST}/users/register`,
       {
         method: 'post',
         body: JSON.stringify(user),

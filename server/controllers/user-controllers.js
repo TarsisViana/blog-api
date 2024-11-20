@@ -44,7 +44,7 @@ const validateUser = [
 ];
 
 async function checkEmail(email) {
-  const existingUser = await prisma.users.findUnique({
+  const existingUser = await prisma.user.findUnique({
     where: { email: email },
   });
   if (existingUser) {
@@ -76,7 +76,7 @@ export const newUser = [
 
     const { salt, hashPw } = genPassword(password);
 
-    const user = await prisma.users.create({
+    const user = await prisma.user.create({
       data: {
         firstname,
         lastname,

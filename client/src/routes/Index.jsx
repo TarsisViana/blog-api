@@ -1,5 +1,5 @@
-import { Link,Form, redirect } from "react-router-dom";
-import Article from "../components/Article";
+import { redirect } from "react-router-dom";
+import ArticleList from "../components/ArticleList";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function action() {
@@ -12,16 +12,7 @@ export async function action() {
 export default function Index() {
   return (
     <>
-      <Link to="/login">Login</Link>
-      <br/>
-      <Link to="/register">Register</Link>
-      <br/>
-      <Link to="/home">HomePage</Link>
-      
-      <Form method="post">
-        <button>log out</button>
-      </Form>
-      <Article />
+      <ArticleList articleArr= {[{name:"one"},{name:"two"}]} />
     </>
   );
 }

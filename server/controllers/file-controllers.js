@@ -5,12 +5,8 @@ export async function createNewFile(req, res) {
   const { originalname, mimetype, destination, filename, path, size } =
     req.file;
 
-  const parentFolder = req.body.parentFolder || null;
-  console.log("parentfolder" + parentFolder);
-  console.log(req.file);
-
   try {
-    var file = await prisma.files.create({
+    const file = await prisma.file.create({
       data: {
         name: originalname,
         fileName: filename,
@@ -18,53 +14,45 @@ export async function createNewFile(req, res) {
         fileType: mimetype,
         size,
         path,
-        folderId: parentFolder,
-        userId: req.user.id,
+        User: {
+          connect: { id: req.user.id },
+        },
       },
+    });
+
+    res.json({
+      file,
+      message: `File ${originalname} uploaded successfully!`,
     });
   } catch (err) {
     console.log(err);
     res.json({ message: err });
-    return;
   }
-
-  res.json({
-    file,
-    message: `File ${originalname} uploaded successfully!`,
-  });
 }
 
 export async function deleteFile(req, res) {
   const { fileName } = req.body;
   try {
-    const file = await prisma.files.delete({ where: { fileName } });
+    const file = await prisma.file.delete({ where: { fileName } });
   } catch (err) {
     res.json({ message: err });
   }
   res.json({ file, message: "File deleted" });
 }
 
-export async function getFiles(req, res) {
-  const parentFolder = req.params.parentFolder || null;
-  console.log(parentFolder);
-  let fileList;
+export async function getPubFiles(req, res) {
   try {
-    fileList = await prisma.users.findUnique({
+    const fileList = await prisma.file.findMany({
       where: {
-        id: req.user.id,
+        published: true,
       },
       select: {
-        files: {
-          where: {
-            folderId: parentFolder,
-          },
-        },
+        id,
       },
     });
+
+    res.json({ fileList });
   } catch (err) {
     res.json({ message: err });
-    return;
   }
-
-  res.json({ fileList });
 }

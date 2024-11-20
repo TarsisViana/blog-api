@@ -13,42 +13,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
-  id        String    @id @default(uuid())
-  email     String    @unique
+model User {
+  id        String  @id @default(uuid())
+  email     String  @unique
   firstname String
   lastname  String?
   password  String
   salt      String
-  role      Role      @default(USER)
-  folders   Folders[]
-  files     Files[]
+  role      Role    @default(ADMIN)
+  files     File[]
 }
 
-model Folders {
-  id      String  @id @default(uuid())
-  name    String
-  Users   Users   @relation(fields: [usersId], references: [id])
-  usersId String
-  files   Files[]
-
-  parentFolder Folders?  @relation("parentFolders", fields: [parentId], references: [id])
-  parentId     String?
-  children     Folders[] @relation("parentFolders")
+model Article {
+  id        String  @id @default(uuid())
+  title     String
+  number    Int
+  published Boolean @default(true)
+  file      File?
 }
 
-model Files {
-  id          String   @id @default(uuid())
+model File {
+  id          String  @id @default(uuid())
   name        String
   fileName    String
   size        Int
   path        String
   destination String
   fileType    String
-  Users       Users    @relation(fields: [userId], references: [id])
+  User        User    @relation(fields: [userId], references: [id])
   userId      String
-  Folders     Folders? @relation(fields: [folderId], references: [id])
-  folderId    String?
+  article     Article @relation(fields: [articleId], references: [id])
+  articleId   String  @unique
 }
 
 enum Role {

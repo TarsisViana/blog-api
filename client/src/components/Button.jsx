@@ -4,10 +4,7 @@ export default function Button({
     children,
 }) {
     return (
-        <button
-            
-            type={type}
-        >
+        <button type={type}>
             {children}
         </button>
     );

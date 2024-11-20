@@ -1,6 +1,9 @@
-import InputField from "../components/InputField";
 import { Form, redirect, useActionData } from "react-router-dom";
+import fetcher from "../config/fetcher";
+
+import InputField from "../components/InputField";
 import Button from "../components/Button";
+
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function action({ request }) {
@@ -8,7 +11,7 @@ export async function action({ request }) {
     const user = Object.fromEntries(formData);
 
     try {
-        const res = await fetch(
+        const res = await fetcher(
             `${import.meta.env.VITE_SERVER_HOST}/auth/login`,
             {
                 method: "post",
@@ -26,7 +29,7 @@ export async function action({ request }) {
         console.log(payload.success)
 
         //save the jwt in localStorage
-        localStorage.setItem('userJwt', JSON.stringify(payload.token))
+        localStorage.setItem('jwt', JSON.stringify(payload.token))
 
         return redirect('/')
     } catch (err) {

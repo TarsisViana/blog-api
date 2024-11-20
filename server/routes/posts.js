@@ -1,16 +1,25 @@
 import { Router } from "express";
+import multer from "multer";
+import passport from "passport";
+import {
+  createPost,
+  getPostFile,
+  getPostList,
+} from "../controllers/post-controllers.js";
+
 const router = Router();
+const upload = multer({ dest: "./uploads/" });
 
-import fs from "node:fs";
+router.get("/article/:articleId", getPostFile);
 
-router.get("/", (req, res) => {
-  fs.readFile("./downloads/test.md", "utf8", (err, data) => {
-    if (err) {
-      res.send({ msg: "file not found", err });
-    } else {
-      res.send(data);
-    }
-  });
-});
+router.get("/post-list", getPostList);
+
+//create article and save md file
+router.post(
+  "/new-upload",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("upload"),
+  createPost
+);
 
 export default router;

@@ -1,48 +1,26 @@
 import { Form, redirect, useLoaderData } from "react-router-dom"
+import fetcher from "../config/fetcher"
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function action({request}) {
   const formData = await request.formData()
-  const intent = formData.get("intent");
 
-  if (intent === "file") {
-    try {
-      const res = await fetch(
-        `${import.meta.env.VITE_SERVER_HOST}/files/upload`,
-        {
-          method: 'post',
-          body: formData,
-          credentials: "include",
-        }
-      )
-      const data = await res.json()
-      console.log(data)
-    } catch (err) {
-      console.log(err)
-    }
-    return {ok:true}
-  } else if (intent === "folder") {
-    try {
-      const folder = Object.fromEntries(formData)
-      console.log(folder)
-      const res = await fetch(
-        `${import.meta.env.VITE_SERVER_HOST}/folders/new`,
-        {
-          method: 'post',
-          body: JSON.stringify(folder),
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      const data = await res.json()
-      console.log(data)
-    } catch (err) {
-      console.log(err)
-    }
-    return {ok:true}
+  try {
+    const res = await fetcher(
+      `${import.meta.env.VITE_SERVER_HOST}/files/upload`,
+      {
+        method: 'post',
+        body: formData,
+        credentials: "include",
+      }
+    )
+    const data = await res.json()
+    console.log(data)
+
+  } catch (err) {
+    console.log(err)
   }
+  return {ok:true}
   
 }
 

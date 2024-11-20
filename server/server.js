@@ -19,21 +19,13 @@ server.use(express.urlencoded({ extended: true }));
 server.use(cors());
 
 //---- ROUTES ----
+server.post("/users", (req, res, next) => {
+  console.log("hey");
+});
 server.use("/users", routes.users);
-server.use("/files", routes.files);
-server.use("/folders", routes.folders);
 server.use("/posts", routes.posts);
 server.use("/auth", routes.auth);
-server.use(
-  "/protected",
-  passport.authenticate("jwt", { session: false }),
-  (req, res, next) => {
-    res.status(200).json({
-      success: true,
-      msg: "You are successfully authenticated to this route!",
-    });
-  }
-);
+server.use("/protected", routes.protectedRouter);
 
 //---- SERVER ----
 server.listen(process.env.SERVER_PORT, () => {

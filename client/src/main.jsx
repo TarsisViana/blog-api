@@ -11,6 +11,8 @@ import Index, {action as IndexAction} from './routes/Index.jsx';
 import Login, {action as LoginAction} from './routes/Login.jsx';
 import Register, {action as RegisterAction}  from './routes/Register.jsx';
 import HomePage, {loader as HomeLoader} from './routes/HomePage.jsx';
+import NewArticle from './routes/NewArticle.jsx';
+import BlogPost from './routes/BlogPost.jsx';
 
 
 const router = createBrowserRouter([
@@ -42,6 +44,15 @@ const router = createBrowserRouter([
         loader: HomeLoader,
         errorElement: <div>Oops! There was an error.</div>,
       },
+      {
+        path: "home/new-article",
+        element: <NewArticle />,
+        errorElement: <div>Oops! There was an error.</div>,
+      },
+      {
+        path: "/post?:postId",
+        element: <BlogPost/>
+      }
     ]
   },
   

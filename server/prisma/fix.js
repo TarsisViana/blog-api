@@ -20,7 +20,12 @@ async function main() {
   });
 }
 
-main()
+async function clearPosts() {
+  const deleteFiles = await prisma.file.deleteMany();
+  const deleteArticles = await prisma.article.deleteMany();
+}
+
+clearPosts()
   .then(async () => {
     await prisma.$disconnect();
   })

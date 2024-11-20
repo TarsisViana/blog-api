@@ -57,6 +57,7 @@ export async function getPostFile(req, res) {
       id: req.params.articleId,
     },
     select: {
+      title: true,
       file: {
         select: {
           path: true,
@@ -67,9 +68,9 @@ export async function getPostFile(req, res) {
 
   fs.readFile(`./${post.file.path}`, "utf8", (err, data) => {
     if (err) {
-      res.send({ msg: "file not found", err });
+      res.json({ msg: "file not found", err });
     } else {
-      res.send(data);
+      res.json({ text: data, title: post.title });
     }
   });
 }

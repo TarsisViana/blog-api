@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 
 //Markdown imports
 import ReactMarkdown from 'react-markdown'
@@ -7,28 +7,24 @@ import remarkFlexibleMarkers from 'remark-flexible-markers'
 
 import "../assets/Joplin.css"
 
-function Article() {
-  const [post,setPost] = useState('')
 
-  useEffect(() => {
-    async function getPost() {
-      const res = await fetch('http://localhost:3000/posts');
-      const txt = await res.text()
-      setPost(txt)
-    }
-    getPost()
-  })
-
+export default function Article({text,title}) {
   return (
     <div style={{
       maxWidth: 600 + "px",
       margin: "auto"
     }}>
+      <h1>{title}</h1>
       <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkFlexibleMarkers]}>
-      {post}
+      {text}
     </ReactMarkdown>
     </div>
   )
 }
 
-export default Article;
+
+
+Article.propTypes = {
+  text: PropTypes.string,
+  title: PropTypes.string
+} 

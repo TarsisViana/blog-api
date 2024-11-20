@@ -1,5 +1,16 @@
-import { redirect } from "react-router-dom";
+import { redirect, useLoaderData } from "react-router-dom";
 import ArticleList from "../components/ArticleList";
+import fetcher from '../config/fetcher.js'
+
+// eslint-disable-next-line react-refresh/only-export-components
+export async function loader() {
+  const res = await fetcher(
+    `${import.meta.env.VITE_SERVER_HOST}/posts/post-list`
+  )
+  const data = await res.json();
+  console.log(data)
+  return data;
+}
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function action() {
@@ -9,10 +20,13 @@ export async function action() {
   return redirect("/")
 }
 
+
 export default function Index() {
+  const arr = useLoaderData();
+
   return (
     <>
-      <ArticleList articleArr= {[{name:"one"},{name:"two"}]} />
+      <ArticleList articleArr= {arr} />
     </>
   );
 }

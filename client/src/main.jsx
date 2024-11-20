@@ -7,12 +7,12 @@ import {
 
 import App from './App.jsx'
 import ErrorPage from './routes/Errorpage.jsx';
-import Index, {action as IndexAction} from './routes/Index.jsx';
+import Index, {action as IndexAction, loader as IndexLoader} from './routes/Index.jsx';
 import Login, {action as LoginAction} from './routes/Login.jsx';
 import Register, {action as RegisterAction}  from './routes/Register.jsx';
 import HomePage, {loader as HomeLoader} from './routes/HomePage.jsx';
 import NewArticle from './routes/NewArticle.jsx';
-import BlogPost from './routes/BlogPost.jsx';
+import BlogPost, {loader as PostLoader} from './routes/BlogPost.jsx';
 
 
 const router = createBrowserRouter([
@@ -25,6 +25,7 @@ const router = createBrowserRouter([
         index: true,
         element: <Index />,
         action: IndexAction,
+        loader: IndexLoader,
       },
       {
         path: "login",
@@ -50,8 +51,9 @@ const router = createBrowserRouter([
         errorElement: <div>Oops! There was an error.</div>,
       },
       {
-        path: "/post?:postId",
-        element: <BlogPost/>
+        path: "/post/:postId",
+        element: <BlogPost />,
+        loader: PostLoader
       }
     ]
   },

@@ -6,12 +6,20 @@ import ArticleListItem from "../components/ArticleListItem";
 // eslint-disable-next-line react-refresh/only-export-components
 export async function action({request}) {
   const formData = await request.formData()
-  const intent = formData.get('intent')
+  const intent = formData.get("intent")
+  const postId = formData.get("id")
 
   if (intent === 'delete') {
-      console.log('hey');
-      return null;
-    }
+    const res = await fetcher(
+      `${import.meta.env.VITE_SERVER_HOST}/posts/${postId}`,
+      {
+        method: "delete",
+      }
+    ) 
+    const payload = await res.json()
+    console.log(payload)
+    return null;
+  }
 }
 
 // eslint-disable-next-line react-refresh/only-export-components

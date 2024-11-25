@@ -3,19 +3,6 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function createPost(req, res) {
-  //const file = await createNewFile(req, res);
-
-  try {
-    const article = await createNewArticle(req, res);
-
-    res.json(article);
-  } catch (err) {
-    console.log(err);
-    res.json({ message: err });
-  }
-}
-
-export async function createNewArticle(req, res) {
   try {
     const { originalname, mimetype, destination, filename, path, size } =
       req.file;
@@ -104,5 +91,38 @@ export async function getArticles(req, res) {
   } catch (err) {
     console.log(err);
     res.json({ message: err });
+  }
+}
+
+export async function deletePost(req, res) {
+  const articleId = req.params.id;
+
+  try {
+    const article = await prisma.article.findUnique({
+      where: {
+        id: articleId,
+      },
+      include: {
+        file: true,
+      },
+    });
+
+    const deleteFile = prisma.file.delete({
+      where: {
+        id: article.file.id,
+      },
+    });
+    const deleteArticle = prisma.article.delete({
+      where: {
+        id: article.id,
+      },
+    });
+
+    const transaction = await prisma.$transaction([deleteFile, deleteArticle]);
+
+    res.json({ msg: "Post deleted" });
+  } catch (err) {
+    console.log(err);
+    res.json({ msg: err });
   }
 }

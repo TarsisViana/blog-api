@@ -3,6 +3,7 @@ import multer from "multer";
 import passport from "passport";
 import {
   createPost,
+  deletePost,
   getArticles,
   getPostFile,
   getPostList,
@@ -26,6 +27,13 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   upload.single("upload"),
   createPost
+);
+
+//---- DELETE ROUTES ----
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  deletePost
 );
 
 export default router;

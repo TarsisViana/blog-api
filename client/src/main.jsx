@@ -5,14 +5,15 @@ import {
   RouterProvider
 } from "react-router-dom";
 
-import App from './App.jsx'
+import App, {loader as AppLoader, action as AppAction} from './App.jsx'
 import ErrorPage from './routes/Errorpage.jsx';
 import Index, {action as IndexAction, loader as IndexLoader} from './routes/Index.jsx';
 import Login, {action as LoginAction} from './routes/Login.jsx';
 import Register, {action as RegisterAction}  from './routes/Register.jsx';
-import HomePage, {loader as HomeLoader} from './routes/HomePage.jsx';
 import NewArticle from './routes/NewArticle.jsx';
-import BlogPost, {loader as PostLoader} from './routes/BlogPost.jsx';
+import BlogPost, { loader as PostLoader } from './routes/BlogPost.jsx';
+import Drive, {loader as driveLoader, action as driveAction} from './routes/Drive.jsx';
+
 
 
 const router = createBrowserRouter([
@@ -20,6 +21,8 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
+    loader: AppLoader,
+    action: AppAction,
     children: [
       {
         index: true,
@@ -41,9 +44,16 @@ const router = createBrowserRouter([
       },
       {
         path: "home",
-        element: <HomePage />,
-        loader: HomeLoader,
+        element: <Drive />,
+        loader: driveLoader,
+        action: driveAction,
         errorElement: <div>Oops! There was an error.</div>,
+        children: [
+          {
+            path: 'new-article',
+            element: <NewArticle/>,
+          },
+        ]
       },
       {
         path: "home/new-article",

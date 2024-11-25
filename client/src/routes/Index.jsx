@@ -8,7 +8,6 @@ export async function loader() {
     `${import.meta.env.VITE_SERVER_HOST}/posts/post-list`
   )
   const data = await res.json();
-  console.log(data)
   return data;
 }
 

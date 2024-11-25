@@ -1,5 +1,6 @@
-import { Form } from "react-router-dom"
-import fetcher from "../config/fetcher"
+import { Form, useNavigate } from "react-router-dom"
+import Modal from "../components/Modal";
+import fetcher from "../config/fetcher";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function action({request}) {
@@ -11,10 +12,16 @@ export async function action({request}) {
 
 
 export default function NewArticle() {
+  const modal = true;
+  const navigate = useNavigate();
 
   return (
     <>
-      <h1>New Article</h1>
+      <Modal
+        openModal={modal}
+        closeModal={()=>navigate('/home')}
+      >
+        <h1>New Article</h1>
       <Form method="post" encType="multipart/form-data">
         <label>
           Title:
@@ -27,9 +34,12 @@ export default function NewArticle() {
         </label>
         <button type="submit">Submit</button>
       </Form>
-    </>  
+      </Modal>
+    </>
+    
   )
 }
+
 
 async function uploadFile(formData) {
   try {

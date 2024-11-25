@@ -2,7 +2,6 @@ import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 
 export default function ArticleList({ articleArr }) {
-  
   if (articleArr) {
     return (
       <>
@@ -11,10 +10,9 @@ export default function ArticleList({ articleArr }) {
           return <><Link
             to= {`/post/${article.id}`}
             key={article.id}
-          >{article.title}</Link><br/></>
-        })
-      }
-    
+            >{article.title}</Link><br/></>
+          })
+        }
       </>
     )
       

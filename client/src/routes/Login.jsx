@@ -9,7 +9,6 @@ import Button from "../components/Button";
 export async function action({ request }) {
     const formData = await request.formData();
     const user = Object.fromEntries(formData);
-
     try {
         const res = await fetcher(
             `${import.meta.env.VITE_SERVER_HOST}/auth/login`,
@@ -34,7 +33,7 @@ export async function action({ request }) {
         return redirect('/')
     } catch (err) {
         console.log(`Error: ${err}`)
-        return redirect("/")
+        return redirect('/')
     }
 
 }

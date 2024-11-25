@@ -90,3 +90,19 @@ export async function getPostList(req, res) {
     res.json({ message: err });
   }
 }
+
+export async function getArticles(req, res) {
+  try {
+    const postArr = await prisma.article.findMany({
+      select: {
+        title: true,
+        id: true,
+      },
+    });
+
+    res.json(postArr);
+  } catch (err) {
+    console.log(err);
+    res.json({ message: err });
+  }
+}
